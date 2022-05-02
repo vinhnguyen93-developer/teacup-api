@@ -3,4 +3,4 @@
 How to run project:
 
 - npm i : Install missing packages
-- npm start : Run project on localhost
+- npm run dev : Run project on localhost
