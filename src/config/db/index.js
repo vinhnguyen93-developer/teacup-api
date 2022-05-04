@@ -7,6 +7,6 @@ try {
     mongoose.connect(process.env.MONGO_URL);
     console.log("Connect success!");
 }catch (err){
-    console.error(err);
+    console.error(err);         
 }
 }
