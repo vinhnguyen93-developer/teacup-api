@@ -65,31 +65,40 @@ class AuthController {
 
   login(req, res, next) {
     const result = validateUserLogin({
-      email: req.body.email
-    })
+      email: req.body.email,
+    });
 
-    if(result.error) {
+    if (result.error) {
       res.json({
         status: 'Error',
-        message: result.error.message
-      })
-    }else {
-      User.findOne({email: req.body.email})
+        message: result.error.message,
+      });
+    } else {
+      User.findOne({ email: req.body.email })
         .then(async (user) => {
-          if(user) {
-            await bcrypt.compare(req.body.password, user.password, function(err, result) {
-              if(result === false) {
-                res.json({
-                  status: false,
-                  message: 'Incorrect password!'
-                })
-              }else {
-                res.json({
-                  status: true,
-                  message: 'Login successfully!',
-                  data: user.email
-                });
+          if (user) {
+            await bcrypt.compare(
+              req.body.password,
+              user.password,
+              function (err, result) {
+                if (result === false) {
+                  res.json({
+                    status: false,
+                    message: 'Incorrect password!',
+                  });
+                } else {
+                  res.json({
+                    status: true,
+                    message: 'Login successfully!',
+                    data: user.email,
+                  });
+                }
               }
+            );
+          } else {
+            res.json({
+              status: false,
+              message: 'Account does not exist!',
             });
           }
         })
