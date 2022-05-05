@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/User');
 const validateUser = require('../../util/validateUser');
+const validateUserLogin = require('../../util/validateUserLogin');
 
 const saltRounds = 10;
 
@@ -54,6 +55,40 @@ class AuthController {
                       error: error,
                     });
                   });
+              }
+            });
+          }
+        })
+        .catch(next);
+    }
+  }
+
+  login(req, res, next) {
+    const result = validateUserLogin({
+      email: req.body.email
+    })
+
+    if(result.error) {
+      res.json({
+        status: 'Error',
+        message: result.error.message
+      })
+    }else {
+      User.findOne({email: req.body.email})
+        .then(async (user) => {
+          if(user) {
+            await bcrypt.compare(req.body.password, user.password, function(err, result) {
+              if(result === false) {
+                res.json({
+                  status: false,
+                  message: 'Incorrect password!'
+                })
+              }else {
+                res.json({
+                  status: true,
+                  message: 'Login successfully!',
+                  data: user.email
+                });
               }
             });
           }
