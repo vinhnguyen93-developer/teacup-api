@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 
 const connectDB = require('./config/db/index.js');
 
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
