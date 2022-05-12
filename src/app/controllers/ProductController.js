@@ -88,6 +88,18 @@ class ProductController {
       })
       .catch(next);
   }
+
+  //Destroy
+  destroy(req, res, next) {
+    Product.deleteOne({ _id: req.params.id })
+      .then(() => {
+        res.json({
+          status: 'OK',
+          message: 'Delete successfully!',
+        });
+      })
+      .catch(next);
+  }
 }
 
 module.exports = new ProductController();
