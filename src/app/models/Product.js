@@ -12,18 +12,6 @@ const Product = new Schema(
       type: String,
       required: true,
     },
-    capacity: {
-      type: Number,
-      required: true,
-    },
-    weight: {
-      type: Number,
-      required: true,
-    },
-    color: {
-      type: String,
-      required: true,
-    },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',

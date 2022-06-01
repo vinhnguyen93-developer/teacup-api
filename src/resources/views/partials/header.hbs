@@ -1,0 +1,61 @@
+<nav class='navbar fixed-top navbar-expand-lg navbar-dark bg-dark'>
+  <div class='container'>
+    <a class='navbar-brand' href='/'>My Shop</a>
+    <button
+      class='navbar-toggler'
+      type='button'
+      data-bs-toggle='collapse'
+      data-bs-target='#navbarSupportedContent'
+      aria-controls='navbarSupportedContent'
+      aria-expanded='false'
+      aria-label='Toggle navigation'
+    >
+      <span class='navbar-toggler-icon'></span>
+    </button>
+    <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+      <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
+        <li class='nav-item dropdown'>
+          <a
+            class='nav-link dropdown-toggle'
+            href='#'
+            id='navbarDropdown'
+            role='button'
+            data-bs-toggle='dropdown'
+            aria-expanded='false'
+          >
+            <img
+              src='https://static.fullstack.edu.vn/static/media/f8-icon.7ad2b161d5e80c87e516.png'
+              alt='f8'
+              class='user-avatar'
+            />
+            Vinh Nguyen
+          </a>
+          <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
+            <li><a class='dropdown-item' href='admin/products/show'>Quản lý sản phẩm</a></li>
+            <li><hr class='dropdown-divider' /></li>
+            <li>
+              <a class='dropdown-item' href='/me/stored/courses'>
+                Đơn hàng của tôi
+              </a>
+            </li>
+            {{! <li><hr class='dropdown-divider' /></li>
+            <li>
+              <a class='dropdown-item' href='/me/stored/news'>
+                Bài viết của tôi
+              </a>
+            </li> }}
+            <li><hr class='dropdown-divider' /></li>
+            <li><a class='dropdown-item' href='#'>Đăng xuất</a></li>
+          </ul>
+        </li>
+        <li class='nav-item'>
+          <a class='nav-link' href='#'>
+            Giỏ hàng
+            <i class='ti-shopping-cart-full'></i>
+            (0)
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

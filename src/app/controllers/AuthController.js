@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 const validateUser = require('../../util/validateUser');
@@ -7,14 +8,26 @@ const validateUserLogin = require('../../util/validateUserLogin');
 const saltRounds = 10;
 
 class AuthController {
-  signup(req, res, next) {
+  // [GET] auth/login
+  showLogin(req, res, next) {
+    res.render('login', { layout: false });
+  }
+
+  // [GET] auth/register
+  showRegister(req, res, next) {
+    res.render('register', { layout: false });
+  }
+
+  register(req, res, next) {
     // Validate form data
     const result = validateUser(req.body);
 
     if (result.error) {
-      res.json({
+      res.render('register', {
+        layout: false,
         status: 'Error',
         message: result.error.message,
+        value: req.body,
       });
     } else {
       // Check user already exist
@@ -22,9 +35,11 @@ class AuthController {
         .exec()
         .then(async (user) => {
           if (user) {
-            res.json({
-              status: false,
-              message: 'User already exist!',
+            res.render('register', {
+              layout: false,
+              status: 'Error',
+              message: 'Tài khoản email đã tồn tại!',
+              value: req.body,
             });
           } else {
             // Hash password
@@ -45,10 +60,7 @@ class AuthController {
                 user
                   .save()
                   .then((result) => {
-                    res.json({
-                      status: true,
-                      message: 'Create user successfully!',
-                    });
+                    res.redirect('/auth/login');
                   })
                   .catch((error) => {
                     res.status(500).json({
@@ -69,36 +81,52 @@ class AuthController {
     });
 
     if (result.error) {
-      res.json({
+      res.render('login', {
+        layout: false,
         status: 'Error',
         message: result.error.message,
+        value: req.body,
       });
     } else {
       User.findOne({ email: req.body.email })
         .then(async (user) => {
           if (user) {
-            await bcrypt.compare(
-              req.body.password,
-              user.password,
-              function (err, result) {
-                if (result === false) {
-                  res.json({
-                    status: false,
-                    message: 'Incorrect password!',
-                  });
-                } else {
-                  res.json({
-                    status: true,
-                    message: 'Login successfully!',
-                    data: user.email,
-                  });
-                }
+            await bcrypt.compare(req.body.password, user.password, function (err, result) {
+              if (result === false) {
+                res.render('login', {
+                  layout: false,
+                  status: 'Error',
+                  message: 'Mật khẩu không chính xác!',
+                  value: req.body,
+                });
+              } else {
+                const accessToken = jwt.sign(
+                  {
+                    id: user._id,
+                    isAdmin: user.isAdmin,
+                  },
+                  process.env.JWT_SECRET,
+                  { expiresIn: '2d' },
+                );
+
+                const payload = {
+                  email: user.email,
+                  userName: user.userName,
+                  isAdmin: user.isAdmin,
+                  accessToken,
+                };
+
+                res.cookie('userInfo', JSON.stringify(payload));
+
+                res.redirect('/');
               }
-            );
+            });
           } else {
-            res.json({
-              status: false,
-              message: 'Account does not exist!',
+            res.render('login', {
+              layout: false,
+              status: 'Error',
+              message: 'Tài khoản không tồn tại!',
+              value: req.body,
             });
           }
         })

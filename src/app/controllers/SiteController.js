@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const { multipleMongooseToObject } = require('../../util/mongoose');
+const { mongooseToObject } = require('../../util/mongoose');
 
 const saltRounds = 10;
 
@@ -8,20 +10,20 @@ class SiteController {
     Product.find({})
       .populate('category', 'name')
       .then((products) => {
-        res.json({
-          products: products,
+        res.render('home', {
+          products: multipleMongooseToObject(products),
         });
       })
       .catch(next);
   }
 
-  // [GET] /:id/detail
+  // [GET] product/:id/detail
   showOne(req, res, next) {
     Product.findOne({ _id: req.params.id })
       .populate('category', 'name')
       .then((product) => {
-        res.json({
-          product: product,
+        res.render('productDetail', {
+          product: mongooseToObject(product),
         });
       })
       .catch(next);

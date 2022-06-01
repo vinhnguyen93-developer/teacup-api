@@ -1,0 +1,39 @@
+<dv class='mt-5'>
+  <div class='row product-detail'>
+    <div class='col-12 col-md-12 col-lg-6'>
+      <div class='big-img'>
+        <img src='/{{product.image}}' alt='' />
+      </div>
+    </div>
+    <div class='col-12 col-md-12 col-lg-6 mt-5'>
+      <h1 class='sp_detail'>{{product.name}}</h1>
+      <div class='sp_parameters'>
+        <span class='parameters_tt'>Thể loại: </span>
+        <span class='parameters_txt'>{{product.category.name}}</span>
+      </div>
+      <div class='sp_parameters'>
+        <span class='parameters_tt'>Mô tả: </span>
+        <span class='sp_description'>{{product.description}}</span>
+      </div>
+      <div class='sp_detai_price'>{{product.price}} VND</div>
+      <div class='sp_detail_order clearfix'>
+        <div class='sp_detail_order_num'>
+          <span class='tt_num_order'>Số lượng:</span>
+          <a href='' class='icon minus'>
+            <i class='fas fa-minus'></i>
+          </a>
+          <span class='num' id='qtyItem-2228'>1</span>
+          <a href='' class='icon plus'>
+            <i class='fas fa-plus'></i>
+          </a>
+        </div>
+        <div class='sp_detail_order_btn'>
+          <input type='hidden' name='qtyItem-2228' value='1' />
+          <a href='' class='btn_web btn-animation-add-to-cart'>
+            <span>Thêm vào giỏ hàng</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</dv>

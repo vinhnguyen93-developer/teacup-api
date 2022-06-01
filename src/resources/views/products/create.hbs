@@ -1,0 +1,62 @@
+<div class='mt-4'>
+  <h3>Đăng sản phẩm mới</h3>
+
+  <a href='/admin/products/show' class='btn btn-primary'>Quay lại</a>
+
+  <form class='mt-4' method='POST' enctype='multipart/form-data' action='/admin/products/create'>
+    <div class='row'>
+      <div class='mb-3 col-4'>
+        <label for='name' class='form-label'>Tên sản phẩm</label>
+        <input type='text' class='form-control' id='name' name='name' />
+      </div>
+      <div class='mb-3 col-4'>
+        <label for='category' class='form-label'>Thể loại của sản phẩm</label>
+        <select id='category' name='category' class='form-select'>
+          {{#each categories}}
+            <option value='{{this._id}}'>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class='mb-3 col-4'>
+      <label for='price' class='form-label'>Giá của sản phẩm</label>
+      <input type='number' class='form-control' id='price' name='price' />
+    </div>
+    <div class='mb-3 col-6'>
+      <label for='description' class='form-label'>Mô tả sản phẩm</label>
+      <textarea type='text' class='form-control' id='description' name='description' rows='3'></textarea>
+    </div>
+    <div class='mb-3 col-4'>
+      <label for='myFile' class='form-label'>Hình ảnh sản phẩm</label>
+      <input type='file' class='form-control' id='myFile' name='image' />
+    </div>
+    <div class='image-preview mb-3' id='imagePreview'>
+      <img src='' alt='Image preview' class='image-preview__image' />
+    </div>
+    <button type='submit' class='btn btn-primary'>Thêm sản phẩm</button>
+  </form>
+</div>
+
+{{! dialog }}
+{{#if status}}
+  <div id='toasts' class='toasts toasts--{{status}}'>
+    <div class='toasts__icon'>
+      <i class='fas {{icon}}'></i>
+    </div>
+    <div class='toasts__body'>
+      <h3 class='toasts__title'>{{title}}</h3>
+      <p class='toasts__msg'>{{message}}</p>
+    </div>
+    <div class='toasts__close'>
+      <i class='fas fa-times'></i>
+    </div>
+  </div>
+{{/if}}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() { const inputFile = document.getElementById('myFile'); const
+  previewContainer = $('#imagePreview'); const previewImage = $('.image-preview__image');
+  inputFile.addEventListener('change', function() { const file = this.files[0]; if(file) { const reader = new
+  FileReader(); previewImage.css('display', 'block'); reader.addEventListener('load', function() {
+  previewImage.attr('src', this.result); }); reader.readAsDataURL(file); } }) })
+</script>

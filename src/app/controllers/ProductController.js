@@ -1,6 +1,30 @@
 const Product = require('../models/Product');
+const Category = require('../models/Category');
+const { multipleMongooseToObject } = require('../../util/mongoose');
 
 class ProductController {
+  // [GET] /admin/products/create
+  showCreate(req, res, next) {
+    Category.find({})
+      .then((categories) => {
+        res.render('products/create', {
+          categories: multipleMongooseToObject(categories),
+        });
+      })
+      .catch(next);
+  }
+
+  // [GET] /admin/products/show
+  showAllProduct(req, res, next) {
+    Product.find({})
+      .then((products) => {
+        res.render('products/show', {
+          products: multipleMongooseToObject(products),
+        });
+      })
+      .catch(next);
+  }
+
   // [GET] /admin/products/show
   show(req, res, next) {
     Product.find({})
@@ -30,14 +54,14 @@ class ProductController {
     Product.findOne({ name: req.body.name })
       .then((product) => {
         if (product) {
-          res.json({
-            status: false,
-            message: 'Product already exist!',
+          res.render('products/create', {
+            status: 'error',
+            title: 'Thất bại',
+            icon: 'fa-exclamation-circle',
+            message: 'Sản phẩm này đã tồn tại!',
           });
         } else {
           req.body.image = req.file.path;
-          req.body.capacity = Number.parseFloat(req.body.capacity);
-          req.body.weight = Number.parseFloat(req.body.weight);
           req.body.price = Number.parseFloat(req.body.price);
 
           const product = new Product(req.body);
@@ -45,15 +69,20 @@ class ProductController {
           product
             .save()
             .then(() => {
-              res.json({
-                status: true,
-                message: 'Create product successfully!',
+              res.render('products/create', {
+                status: 'success',
+                title: 'Thành công',
+                icon: 'fa-check-circle',
+                message: 'Tạo sản phẩm thành công!',
               });
             })
             .catch((error) => {
-              res.json({
-                status: false,
-                message: error,
+              console.log(error);
+              res.render('products/create', {
+                status: 'error',
+                title: 'Thất bại',
+                icon: 'fa-exclamation-circle',
+                message: 'Thêm sản phẩm thất bại!',
               });
             });
         }
@@ -67,24 +96,13 @@ class ProductController {
       req.body.image = req.file.path;
     }
 
-    if (req.body.capacity) {
-      req.body.capacity = Number.parseFloat(req.body.capacity);
-    }
-
-    if (req.body.weight) {
-      req.body.weight = Number.parseFloat(req.body.weight);
-    }
-
     if (req.body.price) {
       req.body.price = Number.parseFloat(req.body.price);
     }
 
     Product.updateOne({ _id: req.params.id }, req.body)
       .then(() => {
-        res.json({
-          status: 'OK',
-          message: 'Update successfully!',
-        });
+        res.redirect('/admin/products/show');
       })
       .catch(next);
   }
