@@ -16,22 +16,35 @@ class ProductController {
 
   // [GET] /admin/products/show
   showAllProduct(req, res, next) {
-    Product.find({})
-      .then((products) => {
+
+    Promise.all([Product.countDocumentsDeleted(), Product.find({})])
+      .then(([deletedCount, products]) => {
         res.render('products/show', {
           products: multipleMongooseToObject(products),
+          deletedCount
         });
       })
       .catch(next);
   }
 
   // [GET] /admin/products/show
-  show(req, res, next) {
-    Product.find({})
-      .populate('category', 'name')
+  // show(req, res, next) {
+  //   Product.find({})
+  //     .populate('category', 'name')
+  //     .then((products) => {
+  //       res.json({
+  //         products: products,
+  //       });
+  //     })
+  //     .catch(next);
+  // }
+
+  // [GET] /admin/products/trash
+  trashProduct(req, res, next) {
+    Product.findDeleted({})
       .then((products) => {
-        res.json({
-          products: products,
+        res.render('products/trash', {
+          products: multipleMongooseToObject(products),
         });
       })
       .catch(next);
@@ -102,19 +115,34 @@ class ProductController {
 
     Product.updateOne({ _id: req.params.id }, req.body)
       .then(() => {
-        res.redirect('/admin/products/show');
+        res.redirect('back');
       })
       .catch(next);
   }
 
-  //Destroy
+  // [DELETE] /admin/products/:id
   destroy(req, res, next) {
+    Product.delete({ _id: req.params.id })
+      .then(() => {
+        res.redirect('back');
+      })
+      .catch(next);
+  }
+
+  // [DELETE] /admin/products/:id/force
+  forceDestroy(req, res, next) {
     Product.deleteOne({ _id: req.params.id })
       .then(() => {
-        res.json({
-          status: 'OK',
-          message: 'Delete successfully!',
-        });
+        res.redirect('back');
+      })
+      .catch(next);
+  }
+
+  // [PATCH] /admin/products/:id/restore
+  restore(req, res, next) {
+    Product.restore({ _id: req.params.id })
+      .then(() => {
+        res.redirect('back');
       })
       .catch(next);
   }

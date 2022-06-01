@@ -34,6 +34,9 @@ app.engine(
       formatDate: (date) => {
         return date.toLocaleString();
       },
+      formatMoneyVnd: (money) => {
+        return money.toLocaleString('it-IT', { style: 'currency', currency: 'vnd' });
+      },
     },
   }),
 );

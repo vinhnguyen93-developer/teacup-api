@@ -2,8 +2,12 @@
   <div>
     <h3>Khóa học của tôi</h3>
 
-    {{!-- <a href='/me/trash/courses'>Thùng rác ({{deletedCount}})</a> --}}
     <a href='/admin/products/create' class='btn btn-primary'>Thêm sản phẩm mới</a>
+
+    <a href='/admin/products/trash' class='text-dark ms-4'>
+      <i class='fa-solid fa-trash-can'></i>
+      Thùng rác ({{deletedCount}})
+    </a>
 
     <div class='mt-4 d-flex align-items-center'>
       <div class='form-check'>
@@ -46,7 +50,7 @@
           </td>
           <td>{{this.name}}</td>
           <td>{{this.description}}</td>
-          <td>{{this.price}} vnd</td>
+          <td>{{formatMoneyVnd this.price}}</td>
           <td>{{formatDate this.createdAt}}</td>
           <td>
             <a href='admin/products/{{this._id}}/edit' class='btn btn-link'>Sửa</a>
@@ -61,9 +65,9 @@
         </tr>
       {{else}}
         <tr>
-          <td colspan='5' class='text-center'>
+          <td colspan='6' class='text-center'>
             Bạn chưa đăng sản phẩm nào!
-            <a href='admin/products/create'> Đăng sản phẩm</a>
+            <a href='/admin/products/create'> Đăng sản phẩm</a>
           </td>
         </tr>
       {{/each}}
@@ -99,9 +103,9 @@
   checkboxAll = $('#checkbox-all'); const productItemCheckbox = $('input[name="courseIds[]"]'); const checkAllSubmitBtn
   = $('.check-all-submit-btn'); $('#delete-product-modal').on('show.bs.modal', function (event) { const button =
   $(event.relatedTarget); productId = button.data('id'); }); btnDeleteProduct.onclick = function() { deleteForm.action =
-  `admin/products/${productId}?_method=DELETE`; deleteForm.submit(); }; checkboxAll.change(function() { var isCheckedAll
-  = $(this).prop('checked'); productItemCheckbox.prop('checked', isCheckedAll); renderCheckAllSubmitBtn(); });
-  productItemCheckbox.change(function() { var isCheckedAll = productItemCheckbox.length ===
+  `/admin/products/${productId}?_method=DELETE`; deleteForm.submit(); }; checkboxAll.change(function() { var
+  isCheckedAll = $(this).prop('checked'); productItemCheckbox.prop('checked', isCheckedAll); renderCheckAllSubmitBtn();
+  }); productItemCheckbox.change(function() { var isCheckedAll = productItemCheckbox.length ===
   $('input[name="courseIds[]"]:checked').length; checkboxAll.prop('checked',isCheckedAll); renderCheckAllSubmitBtn();
   }); function renderCheckAllSubmitBtn() { var checkedCount = $('input[name="courseIds[]"]:checked').length;
   if(checkedCount > 0) { checkAllSubmitBtn.attr('disabled', false); } else { checkAllSubmitBtn.attr('disabled', true); }

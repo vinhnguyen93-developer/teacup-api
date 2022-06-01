@@ -11,9 +11,8 @@
               <h5 class='card-title text-dark'>{{this.name}}</h5>
             </a>
             <p class='card-text sp_price'>Giá:
-              <span class='text-danger'>
-                {{this.price}}
-                vnd
+              <span>
+                {{formatMoneyVnd this.price}}
               </span>
             </p>
             <a href='/product/{{this._id}}/detail' class='btn_card'>Xem chi tiết</a>

@@ -1,9 +1,4 @@
-html {
-  font-size: 62.5%;
-}
-
 body {
-  font-size: 1.6rem;
   padding-top: 56px;
 }
 
@@ -12,10 +7,6 @@ a {
 }
 
 /* Navbar */
-.navbar-brand {
-  font-size: 3rem;
-}
-
 .btn-link {
   text-decoration: none;
 }
@@ -204,7 +195,7 @@ a {
 }
 
 .card-title {
-  font-size: 1.9rem;
+  font-size: 1.3rem;
 }
 
 .card:hover {
@@ -213,7 +204,11 @@ a {
 }
 
 .sp_price {
-  font-size: 18px;
+  font-size: 19px;
+}
+
+.sp_price span {
+  color: #c8b964;
 }
 
 .card-img-top {
