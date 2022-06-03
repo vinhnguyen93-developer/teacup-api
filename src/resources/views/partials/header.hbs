@@ -14,44 +14,40 @@
     </button>
     <div class='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul class='navbar-nav ms-auto mb-2 mb-lg-0'>
-        <li class='nav-item dropdown'>
-          <a
-            class='nav-link dropdown-toggle'
-            href='#'
-            id='navbarDropdown'
-            role='button'
-            data-bs-toggle='dropdown'
-            aria-expanded='false'
-          >
-            <img
-              src='https://static.fullstack.edu.vn/static/media/f8-icon.7ad2b161d5e80c87e516.png'
-              alt='f8'
-              class='user-avatar'
-            />
-            Vinh Nguyen
-          </a>
-          <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
-            <li><a class='dropdown-item' href='/admin/products/show'>Quản lý sản phẩm</a></li>
-            <li><hr class='dropdown-divider' /></li>
-            <li>
-              <a class='dropdown-item' href='/me/stored/courses'>
-                Đơn hàng của tôi
-              </a>
-            </li>
-            {{! <li><hr class='dropdown-divider' /></li>
-            <li>
-              <a class='dropdown-item' href='/me/stored/news'>
-                Bài viết của tôi
-              </a>
-            </li> }}
-            <li><hr class='dropdown-divider' /></li>
-            <li><a class='dropdown-item' href='#'>Đăng xuất</a></li>
-          </ul>
-        </li>
-        <li class='nav-item'>
-          <a class='nav-link' href='#'>
+        {{#if login}}
+          <li class='nav-item dropdown'>
+            <a
+              class='nav-link dropdown-toggle'
+              href='#'
+              id='navbarDropdown'
+              role='button'
+              data-bs-toggle='dropdown'
+              aria-expanded='false'
+            >
+              <img src='../../../images/profile.jpg' alt='profile' class='user-avatar' />
+              {{getCurrentUser currentUser}}
+            </a>
+            <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
+              {{#if (checkAdmin currentUser)}}
+                <li><a class='dropdown-item' href='/admin/products/show'>Quản lý sản phẩm</a></li>
+                <li><hr class='dropdown-divider' /></li>
+              {{/if}}
+              <li>
+                <a class='dropdown-item' href='/me/stored/courses'>
+                  Đơn hàng của tôi
+                </a>
+              </li>
+              <li><hr class='dropdown-divider' /></li>
+              <li><a class='dropdown-item' href='/auth/logout'>Đăng xuất</a></li>
+            </ul>
+          </li>
+        {{else}}
+          <li class='nav-item'><a class='nav-link' href='/auth/login'>Đăng nhập</a></li>
+        {{/if}}
+        <li class='nav-item ms-2 navbar-cart-icon'>
+          <a class='nav-link nav-icon-cart' href='#'>
             <i class='fa-solid fa-cart-shopping'></i>
-            (0)
+            <span class='badge'>0</span>
           </a>
         </li>
       </ul>

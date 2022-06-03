@@ -56,19 +56,21 @@
       </form>
     </main>
 
-    {{#if status}}
-      <div id='toasts' class='toasts toasts--error'>
-        <div class='toasts__icon'>
-          <i class='fas fa-check-circle'></i>
+    {{#if hasError}}
+      {{#each messages}}
+        <div id='toasts' class='toasts toasts--error'>
+          <div class='toasts__icon'>
+            <i class='fas fa-check-circle'></i>
+          </div>
+          <div class='toasts__body'>
+            <h3 class='toasts__title'>Có lỗi</h3>
+            <p class='toasts__msg'>{{this}}</p>
+          </div>
+          <div class='toasts__close'>
+            <i class='fas fa-times'></i>
+          </div>
         </div>
-        <div class='toasts__body'>
-          <h3 class='toasts__title'>Error</h3>
-          <p class='toasts__msg'>{{message}}</p>
-        </div>
-        <div class='toasts__close'>
-          <i class='fas fa-times'></i>
-        </div>
-      </div>
+      {{/each}}
     {{/if}}
 
     <script

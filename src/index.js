@@ -2,14 +2,21 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const { engine } = require('express-handlebars');
+const session = require('express-session');
+const passport = require('passport');
 const path = require('path');
+const flash = require('connect-flash');
 
 const route = require('./routes');
+const { checkUserLogin } = require('./app/middlewares/LoginMiddleware');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 const connectDB = require('./config/db/index.js');
+
+connectDB();
+require('./config/passport');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
@@ -18,8 +25,20 @@ app.use(express.json());
 
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
+app.use(
+  session({
+    secret: 'Our little secret.',
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
-connectDB();
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(checkUserLogin);
 
 // HTTP Logger
 app.use(morgan('combined'));
@@ -36,6 +55,12 @@ app.engine(
       },
       formatMoneyVnd: (money) => {
         return money.toLocaleString('it-IT', { style: 'currency', currency: 'vnd' });
+      },
+      getCurrentUser: (user) => {
+        return user.userName;
+      },
+      checkAdmin: (user) => {
+        return user.isAdmin;
       },
     },
   }),
