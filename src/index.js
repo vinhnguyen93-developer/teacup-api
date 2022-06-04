@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
@@ -6,6 +7,7 @@ const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 
 const route = require('./routes');
 const { checkUserLogin } = require('./app/middlewares/LoginMiddleware');
@@ -30,6 +32,8 @@ app.use(
     secret: 'Our little secret.',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+    cookie: { maxAge: 180 * 60 * 1000 },
   }),
 );
 
@@ -54,6 +58,10 @@ app.engine(
         return date.toLocaleString();
       },
       formatMoneyVnd: (money) => {
+        if (!money) {
+          return '';
+        }
+
         return money.toLocaleString('it-IT', { style: 'currency', currency: 'vnd' });
       },
       getCurrentUser: (user) => {

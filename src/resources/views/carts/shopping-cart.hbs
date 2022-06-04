@@ -1,0 +1,78 @@
+<div class='sec banner_page'>
+  <img class='pc' src='https://minhlong.com/templates/images/tuyendung_banner_01.jpg' alt='' />
+  <div class='bg_normal'></div>
+  <div class='banner_title'>
+    <h1 class='main_tt'>Giỏ hàng của bạn</h1>
+    <p class='text_note'></p>
+  </div>
+</div>
+<div class='sec table-page clearfix'>
+  <ul id='cartList'><li class='tbl-tt clearfix'>
+      <div class='tbl-name'><p>Sản phẩm</p></div>
+      <div class='tbl-price'><p>Đơn giá</p></div>
+      <div class='tbl-num'><p>Số lượng</p></div>
+      <div class='tbl-sum'><p>Thành tiền</p></div>
+    </li>
+    {{#if products}}
+      {{#each products}}
+        <li class='clearfix'>
+          <div class='tbl-name'>
+            <a href='/product/{{this.item._id}}/detail' class='tbl-img img'>
+              <img src='../{{this.item.image}}' alt='{{this.item.name}}' />
+            </a>
+            <div class='tbl-info list-info'>
+              <a href='/product/{{this.item._id}}/detail' class='list-tt'>
+                {{this.item.name}}
+              </a>
+            </div>
+          </div>
+          <div class='tbl-price list-info'>
+            <div class='price'>{{formatMoneyVnd this.item.price}}</div>
+          </div>
+          <div class='tbl-num'>
+            <div class='detai-buy'>
+              <a
+                href='javascript:void(0);'
+                class='icon minus'
+                onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'-');"
+              ><i class='fas fa-minus'></i></a>
+              <span class='num'>{{this.quantity}}</span>
+              <a
+                href='javascript:void(0);'
+                class='icon plus'
+                onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'+');"
+              ><i class='fas fa-plus'></i></a>
+            </div>
+          </div>
+          <div class='tbl-sum list-info'>
+            <p class='price'>{{formatMoneyVnd this.price}}</p>
+          </div>
+          <a class='close' href='javascript:void(0);' onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'x');">
+            <i class='fa-solid fa-xmark'></i>
+          </a>
+        </li>
+      {{/each}}
+    {{else}}
+      <li class='clear'>
+        <p class='tbl_empty'>Không có sản phẩm nào trong giỏ hàng của bạn!</p>
+      </li>
+    {{/if}}
+
+  </ul>
+  <div class='tool-price'>
+    <p class='clearfix price-full'><span>Tổng tiền thanh toán: </span><span
+        class='tool-price-num'
+        id='totalCart'
+      >{{formatMoneyVnd this.totalPrice}}</span>
+    </p>
+    <p>Đã bao gồm thuế VAT<br />Chưa bao gồm chi phí vận chuyển</p>
+    <div class='list-btn clear'>
+      <a href='/' class='btn_web' id='btnBuyMore'>
+        <span>Mua thêm sản phẩm</span>
+      </a>
+      <a href='https://minhlong.com/vi/thong-tin-cua-ban.html' class='btn_web'>
+        <span>Tiến hành thanh toán</span>
+      </a>
+    </div>
+  </div>
+</div>

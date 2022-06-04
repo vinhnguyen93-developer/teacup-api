@@ -45,9 +45,9 @@
           <li class='nav-item'><a class='nav-link' href='/auth/login'>Đăng nhập</a></li>
         {{/if}}
         <li class='nav-item ms-2 navbar-cart-icon'>
-          <a class='nav-link nav-icon-cart' href='#'>
+          <a class='nav-link nav-icon-cart' href='/cart/show'>
             <i class='fa-solid fa-cart-shopping'></i>
-            <span class='badge'>0</span>
+            <span class='badge'>{{session.cart.totalQuantity}}</span>
           </a>
         </li>
       </ul>

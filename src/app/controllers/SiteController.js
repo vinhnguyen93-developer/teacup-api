@@ -22,7 +22,7 @@ class SiteController {
     Product.findOne({ _id: req.params.id })
       .populate('category', 'name')
       .then((product) => {
-        res.render('productDetail', {
+        res.render('products/productDetail', {
           product: mongooseToObject(product),
         });
       })
