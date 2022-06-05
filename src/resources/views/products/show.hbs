@@ -1,6 +1,6 @@
 <form class='mt-4' name='container-fluid-form' method='POST' action='/courses/handle-form-actions'>
   <div>
-    <h3>Khóa học của tôi</h3>
+    <h3>Sản phẩm đã đăng</h3>
 
     <a href='/admin/products/create' class='btn btn-primary'>Thêm sản phẩm mới</a>
 
@@ -53,7 +53,7 @@
           <td>{{formatMoneyVnd this.price}}</td>
           <td>{{formatDate this.createdAt}}</td>
           <td>
-            <a href='admin/products/{{this._id}}/edit' class='btn btn-link'>Sửa</a>
+            <a href='/admin/products/{{this._id}}/edit' class='btn btn-link'>Sửa</a>
             <a
               href=''
               class='btn btn-link'
@@ -97,17 +97,4 @@
 {{! Delete hidden form }}
 <form method='POST' name='delete-product-form'></form>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() { let productId; const deleteForm =
-  document.forms['delete-product-form']; const btnDeleteProduct = document.getElementById('btn-delete-product'); const
-  checkboxAll = $('#checkbox-all'); const productItemCheckbox = $('input[name="courseIds[]"]'); const checkAllSubmitBtn
-  = $('.check-all-submit-btn'); $('#delete-product-modal').on('show.bs.modal', function (event) { const button =
-  $(event.relatedTarget); productId = button.data('id'); }); btnDeleteProduct.onclick = function() { deleteForm.action =
-  `/admin/products/${productId}?_method=DELETE`; deleteForm.submit(); }; checkboxAll.change(function() { var
-  isCheckedAll = $(this).prop('checked'); productItemCheckbox.prop('checked', isCheckedAll); renderCheckAllSubmitBtn();
-  }); productItemCheckbox.change(function() { var isCheckedAll = productItemCheckbox.length ===
-  $('input[name="courseIds[]"]:checked').length; checkboxAll.prop('checked',isCheckedAll); renderCheckAllSubmitBtn();
-  }); function renderCheckAllSubmitBtn() { var checkedCount = $('input[name="courseIds[]"]:checked').length;
-  if(checkedCount > 0) { checkAllSubmitBtn.attr('disabled', false); } else { checkAllSubmitBtn.attr('disabled', true); }
-  } });
-</script>
+<script src='/javascripts/showAdminProduct.js' type='text/javascript'></script>

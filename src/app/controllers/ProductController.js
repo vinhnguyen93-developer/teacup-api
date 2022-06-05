@@ -1,6 +1,6 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
-const { multipleMongooseToObject } = require('../../util/mongoose');
+const { multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose');
 
 class ProductController {
   // [GET] /admin/products/create
@@ -16,28 +16,15 @@ class ProductController {
 
   // [GET] /admin/products/show
   showAllProduct(req, res, next) {
-
     Promise.all([Product.countDocumentsDeleted(), Product.find({})])
       .then(([deletedCount, products]) => {
         res.render('products/show', {
           products: multipleMongooseToObject(products),
-          deletedCount
+          deletedCount,
         });
       })
       .catch(next);
   }
-
-  // [GET] /admin/products/show
-  // show(req, res, next) {
-  //   Product.find({})
-  //     .populate('category', 'name')
-  //     .then((products) => {
-  //       res.json({
-  //         products: products,
-  //       });
-  //     })
-  //     .catch(next);
-  // }
 
   // [GET] /admin/products/trash
   trashProduct(req, res, next) {
@@ -52,11 +39,11 @@ class ProductController {
 
   // [GET] /admin/products/:id/edit
   edit(req, res, next) {
-    Product.findOne({ _id: req.params.id })
-      .populate('category', 'name')
-      .then((product) => {
-        res.json({
-          product: product,
+    Promise.all([Category.find({}), Product.findOne({ _id: req.params.id })])
+      .then(([categories, product]) => {
+        res.render('products/edit', {
+          categories: multipleMongooseToObject(categories),
+          product: mongooseToObject(product),
         });
       })
       .catch(next);
@@ -115,9 +102,9 @@ class ProductController {
 
     Product.updateOne({ _id: req.params.id }, req.body)
       .then(() => {
-        res.redirect('back');
+        res.redirect('/admin/products/show');
       })
-      .catch(next);
+      .catch((err) => console.log(err));
   }
 
   // [DELETE] /admin/products/:id

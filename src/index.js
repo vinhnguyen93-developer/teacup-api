@@ -70,6 +70,13 @@ app.engine(
       checkAdmin: (user) => {
         return user.isAdmin;
       },
+      compareCategory: (categoryId, productCategoryId) => {
+        if (categoryId === productCategoryId) {
+          return 'selected';
+        }
+
+        console.log(false);
+      },
     },
   }),
 );

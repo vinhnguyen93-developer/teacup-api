@@ -1,18 +1,65 @@
 <div class='mt-4'>
-  <h3>Cập nhật khóa học </h3>
-  <form class='mt-4' method='POST' action='/courses/{{course._id}}?_method=PUT'>
-    <div class='mb-3'>
-      <label for='name' class='form-label'>Tên khóa học</label>
-      <input type='text' class='form-control' value='{{course.name}}' id='name' name='name' />
+  <h3>Cập nhật sản phẩm</h3>
+
+  <a href='/admin/products/show' class='btn btn-primary'>
+    <i class='fa-solid fa-arrow-left'></i>
+    Quay lại
+  </a>
+
+  <form class='mt-4' method='POST' enctype='multipart/form-data' action='/admin/products/{{product._id}}?_method=PUT'>
+    <div class='row'>
+      <div class='mb-3 col-4'>
+        <label for='name' class='form-label'>Tên sản phẩm</label>
+        <input type='text' class='form-control' id='name' name='name' value='{{product.name}}' />
+      </div>
+      <div class='mb-3 col-4'>
+        <label for='category' class='form-label'>Thể loại của sản phẩm</label>
+        <select id='category' name='category' class='form-select'>
+          {{#each categories}}
+            <option value='{{this._id}}' {{compareCategory @this._id product.category}}>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
     </div>
-    <div class='mb-3'>
-      <label for='description' class='form-label'>Mô tả khóa học</label>
-      <textarea class='form-control' id='description' name='description'>{{course.description}}</textarea>
+    <div class='mb-3 col-4'>
+      <label for='price' class='form-label'>Giá của sản phẩm</label>
+      <input type='number' class='form-control' id='price' name='price' value='{{product.price}}' />
     </div>
-    <div class='mb-3'>
-      <label for='videoId' class='form-label'>Video ID</label>
-      <input type='text' class='form-control' value='{{course.videoId}}' id='videoId' name='videoId' />
+    <div class='mb-3 col-6'>
+      <label for='description' class='form-label'>Mô tả sản phẩm</label>
+      <textarea
+        type='text'
+        class='form-control'
+        id='description'
+        name='description'
+        rows='3'
+      >{{product.description}}</textarea>
     </div>
-    <button type='submit' class='btn btn-primary'>Lưu lại</button>
+    <div class='mb-3 col-4'>
+      <label for='myFile' class='form-label'>Hình ảnh sản phẩm</label>
+      <input type='file' class='form-control' id='myFile' name='image' />
+    </div>
+    <div class='image-preview mb-3' id='imagePreview'>
+      <img src='' alt='Image preview' class='image-preview__image' />
+    </div>
+    <button type='submit' class='btn btn-primary'>Cập nhật sản phẩm</button>
   </form>
 </div>
+
+{{! dialog }}
+{{#if status}}
+  <div id='toasts' class='toasts toasts--{{status}}'>
+    <div class='toasts__icon'>
+      <i class='fas {{icon}}'></i>
+    </div>
+    <div class='toasts__body'>
+      <h3 class='toasts__title'>{{title}}</h3>
+      <p class='toasts__msg'>{{message}}</p>
+    </div>
+    <div class='toasts__close'>
+      <i class='fas fa-times'></i>
+    </div>
+  </div>
+{{/if}}
+
+<script src='/javascripts/createProduct.js' type='text/javascript'></script>

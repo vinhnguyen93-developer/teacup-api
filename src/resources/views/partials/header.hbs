@@ -1,6 +1,6 @@
-<nav class='navbar fixed-top navbar-expand-lg navbar-dark bg-dark'>
+<nav class='navbar fixed-top navbar-expand-lg'>
   <div class='container'>
-    <a class='navbar-brand' href='/'>My Shop</a>
+    <a class='navbar-brand navbar-color' href='/'>My Shop</a>
     <button
       class='navbar-toggler'
       type='button'
@@ -17,7 +17,7 @@
         {{#if login}}
           <li class='nav-item dropdown'>
             <a
-              class='nav-link dropdown-toggle'
+              class='nav-link dropdown-toggle navbar-color'
               href='#'
               id='navbarDropdown'
               role='button'
@@ -27,25 +27,36 @@
               <img src='../../../images/profile.jpg' alt='profile' class='user-avatar' />
               {{getCurrentUser currentUser}}
             </a>
-            <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>
+            <ul class='dropdown-menu custom-dropdown' aria-labelledby='navbarDropdown'>
               {{#if (checkAdmin currentUser)}}
-                <li><a class='dropdown-item' href='/admin/products/show'>Quản lý sản phẩm</a></li>
-                <li><hr class='dropdown-divider' /></li>
+                <li>
+                  <a class='dropdown-item' href='/admin/products/show'>
+                    <i class='fa-solid fa-gear me-2'></i>
+                    Quản lý sản phẩm
+                  </a>
+                </li>
               {{/if}}
               <li>
                 <a class='dropdown-item' href='/me/stored/courses'>
+                  <i class='fa-solid fa-bag-shopping me-2'></i>
                   Đơn hàng của tôi
                 </a>
               </li>
-              <li><hr class='dropdown-divider' /></li>
-              <li><a class='dropdown-item' href='/auth/logout'>Đăng xuất</a></li>
+              <li>
+                <a class='dropdown-item' href='/auth/logout'>
+                  <i class='fa-solid fa-arrow-right-from-bracket me-2'></i>
+                  Đăng xuất
+                </a>
+              </li>
             </ul>
           </li>
         {{else}}
-          <li class='nav-item'><a class='nav-link' href='/auth/login'>Đăng nhập</a></li>
+          <li class='nav-item'>
+            <a class='nav-link navbar-color' href='/auth/login'>Đăng nhập</a>
+          </li>
         {{/if}}
         <li class='nav-item ms-2 navbar-cart-icon'>
-          <a class='nav-link nav-icon-cart' href='/cart/show'>
+          <a class='nav-link nav-icon-cart navbar-color' href='/cart/show'>
             <i class='fa-solid fa-cart-shopping'></i>
             <span class='badge'>{{session.cart.totalQuantity}}</span>
           </a>

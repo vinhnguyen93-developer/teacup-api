@@ -25,7 +25,6 @@ class CartController {
       .then((product) => {
         cart.add(product, product._id);
         req.session.cart = cart;
-        console.log(req.session.cart);
         res.redirect('back');
       })
       .catch((error) => {

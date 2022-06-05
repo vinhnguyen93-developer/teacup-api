@@ -32,7 +32,6 @@ const upload = multer({
 });
 
 router.post('/create', upload.single('image'), productController.create);
-// router.get('/', productController.show);
 router.get('/create', productController.showCreate);
 router.get('/show', productController.showAllProduct);
 router.get('/trash', productController.trashProduct);

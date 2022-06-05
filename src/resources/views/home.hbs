@@ -1,22 +1,16 @@
-<div class='mt-4'>
+<div class='mt-4 list-item'>
   <div class='row'>
     {{#each products}}
-      <div class='col-6 col-md-6 col-lg-3 mt-4'>
-        <div class='card card-product-item'>
-          <a href='/product/{{this._id}}/detail'>
-            <img src='{{this.image}}' class='card-img-top w-100' alt='{{this.image}} ' />
-          </a>
-          <div class='card-body'>
-            <a href='/product/{{this._id}}/detail'>
-              <h5 class='card-title text-dark'>{{this.name}}</h5>
-            </a>
-            <p class='card-text sp_price'>Giá:
-              <span>
-                {{formatMoneyVnd this.price}}
-              </span>
-            </p>
-            <a href='/product/{{this._id}}/detail' class='btn_card'>Xem chi tiết</a>
-          </div>
+      <div class='col-6 col-md-6 col-lg-3 item'>
+        <a href='/product/{{this._id}}/detail' class='link_img'>
+          <img src='{{this.image}}' alt='{{this.image}}' />
+          <div class='hover_web bg_normal'><span><i class='fas fa-search'></i></span></div>
+        </a>
+        <div class='box_item_new'>
+          <h3 class='title_link'>
+            <a href='/product/{{this._id}}/detail'>{{this.name}}</a>
+          </h3>
+          <div class='sp_price'>{{formatMoneyVnd this.price}}</div>
         </div>
       </div>
     {{/each}}
