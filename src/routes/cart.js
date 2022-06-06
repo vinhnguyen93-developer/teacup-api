@@ -5,5 +5,6 @@ const cartController = require('../app/controllers/CartController');
 
 router.get('/show', cartController.show);
 router.get('/add-to-cart/:id', cartController.addToCart);
+router.get('/delete/:id', cartController.destroy);
 
 module.exports = router;

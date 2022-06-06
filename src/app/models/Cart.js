@@ -16,6 +16,12 @@ function Cart(oldCart) {
     this.totalPrice += storedItem.item.price;
   };
 
+  this.destroy = function (id) {
+    this.totalQuantity -= this.items[id].quantity;
+    this.totalPrice -= this.items[id].price;
+    delete this.items[id];
+  };
+
   this.generateArray = function () {
     let array = [];
 

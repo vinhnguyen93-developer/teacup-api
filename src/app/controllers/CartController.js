@@ -31,6 +31,18 @@ class CartController {
         res.redirect('/');
       });
   }
+
+  // [GET] cart/delete/:id
+  destroy(req, res, next) {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart);
+
+    cart.destroy(productId);
+
+    req.session.cart = cart;
+
+    res.redirect('back');
+  }
 }
 
 module.exports = new CartController();
