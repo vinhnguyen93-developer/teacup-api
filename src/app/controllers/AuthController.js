@@ -1,17 +1,11 @@
-const bcrypt = require('bcrypt');
-
-const User = require('../models/User');
-const validateUser = require('../../util/validateUser');
-const validateUserLogin = require('../../util/validateUserLogin');
-
 const saltRounds = 10;
-
 class AuthController {
   // [GET] auth/login
   showLogin(req, res, next) {
     const messages = req.flash('error');
 
     res.render('login', {
+      csrfToken: req.csrfToken(),
       layout: false,
       messages,
       hasError: messages.length > 0,
@@ -23,6 +17,7 @@ class AuthController {
     const messages = req.flash('error');
 
     res.render('register', {
+      csrfToken: req.csrfToken(),
       layout: false,
       messages,
       hasError: messages.length > 0,

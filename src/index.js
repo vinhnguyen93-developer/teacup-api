@@ -11,14 +11,18 @@ const MongoStore = require('connect-mongo');
 
 const route = require('./routes');
 const { checkUserLogin } = require('./app/middlewares/LoginMiddleware');
+const { connectMongodb } = require('./config/db/index.js');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-const connectDB = require('./config/db/index.js');
+let store = new MongoStore({
+  mongoUrl: process.env.MONGO_URL,
+  collection: 'sessions',
+});
 
-connectDB();
 require('./config/passport');
+connectMongodb();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static('uploads'));
@@ -32,7 +36,7 @@ app.use(
     secret: 'Our little secret.',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL }),
+    store: store,
     cookie: { maxAge: 180 * 60 * 1000 },
   }),
 );

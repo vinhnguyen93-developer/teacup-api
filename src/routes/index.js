@@ -3,6 +3,7 @@ const categoryRouter = require('./category');
 const productRouter = require('./product');
 const siteRouter = require('./site');
 const cartRouter = require('./cart');
+const orderRouter = require('./order');
 
 const { isLoggedIn } = require('../app/middlewares/LoginMiddleware');
 const { adminRequired } = require('../app/middlewares/AdminMiddlware');
@@ -12,6 +13,7 @@ function route(app) {
   app.use('/admin/products', adminRequired, productRouter);
   app.use('/auth', authRouter);
   app.use('/cart', cartRouter);
+  app.use('/order', orderRouter);
 
   app.use('/', siteRouter);
 }

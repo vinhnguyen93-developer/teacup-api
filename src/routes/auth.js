@@ -1,10 +1,15 @@
 const express = require('express');
 const passport = require('passport');
+const csrf = require('csurf');
+
+const csrfProtection = csrf();
 
 const router = express.Router();
 
 const authController = require('../app/controllers/AuthController');
 const { notLoggedIn } = require('../app/middlewares/LoginMiddleware');
+
+router.use(csrfProtection);
 
 router.get('/login', notLoggedIn, authController.showLogin);
 router.get('/register', notLoggedIn, authController.showRegister);
