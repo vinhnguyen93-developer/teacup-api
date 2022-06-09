@@ -5,7 +5,6 @@ class AuthController {
     const messages = req.flash('error');
 
     res.render('login', {
-      csrfToken: req.csrfToken(),
       layout: false,
       messages,
       hasError: messages.length > 0,
@@ -17,7 +16,6 @@ class AuthController {
     const messages = req.flash('error');
 
     res.render('register', {
-      csrfToken: req.csrfToken(),
       layout: false,
       messages,
       hasError: messages.length > 0,
