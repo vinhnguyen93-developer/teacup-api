@@ -19,12 +19,29 @@ const Order = new Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
+    note: {
+      type: String,
+      default: ' ',
+    },
     name: {
       type: String,
       required: true,
     },
     paymentId: {
       type: String,
+      required: true,
+    },
+    paymentType: {
+      type: String,
+      required: true,
+    },
+    orderStatus: {
+      type: String,
+      default: false,
       required: true,
     },
   },

@@ -16,3 +16,18 @@
     {{/each}}
   </div>
 </div>
+
+{{#if message}}
+  <div id='toasts' class='toasts toasts--success'>
+    <div class='toasts__icon'>
+      <i class='fas fa-check-circle'></i>
+    </div>
+    <div class='toasts__body'>
+      <h3 class='toasts__title'>Thành công</h3>
+      <p class='toasts__msg'>{{message}}</p>
+    </div>
+    <div class='toasts__close'>
+      <i class='fas fa-times'></i>
+    </div>
+  </div>
+{{/if}}

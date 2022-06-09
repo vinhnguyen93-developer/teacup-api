@@ -7,11 +7,14 @@ const saltRounds = 10;
 class SiteController {
   // [GET] /
   show(req, res, next) {
+    const message = req.flash('success')[0];
+
     Product.find({})
       .populate('category', 'name')
       .then((products) => {
         res.render('home', {
           products: multipleMongooseToObject(products),
+          message: message,
         });
       })
       .catch(next);
