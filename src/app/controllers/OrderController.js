@@ -96,7 +96,6 @@ class OrderController {
       const createDate = dateFormat(date, 'yyyymmddHHmmss');
       const orderId = dateFormat(date, 'HHmmss');
       const amount = req.session.cart.totalPrice;
-      let bankCode = 'NCB';
       const orderInfo = `Thanh toan don hang ngay: ${createDate}`;
       const orderType = '100000';
       const locale = 'vn';
@@ -108,7 +107,6 @@ class OrderController {
       vnp_Params['vnp_Version'] = '2.1.0';
       vnp_Params['vnp_Command'] = 'pay';
       vnp_Params['vnp_TmnCode'] = tmnCode;
-      // vnp_Params['vnp_Merchant'] = ''
       vnp_Params['vnp_Locale'] = locale;
       vnp_Params['vnp_CurrCode'] = currCode;
       vnp_Params['vnp_TxnRef'] = orderId;
@@ -174,11 +172,9 @@ class OrderController {
         req.flash('error', 'Giao dịch không thành công!');
         res.redirect('/order/show');
       }
-      // res.json({ code: vnp_Params['vnp_ResponseCode'] });
     } else {
       req.flash('error', 'Giao dịch không thành công!');
       res.redirect('/order/show');
-      // res.json({ code: '97' });
     }
   }
 }
