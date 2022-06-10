@@ -7,60 +7,36 @@
   </div>
 </div>
 <div class='sec table-page clearfix'>
-  <ul id='cartList'><li class='tbl-tt clearfix'>
-      <div class='tbl-name'><p>Sản phẩm</p></div>
-      <div class='tbl-price'><p>Ngày</p></div>
-      <div class='tbl-num'><p>Thanh toán</p></div>
-      <div class='tbl-sum'><p>Tổng</p></div>
-    </li>
-    {{#if orders}}
-      {{#each orders}}
-        {{#each this.items}}
-          <li class='clearfix'>
-            <div class='tbl-name'>
-              <a href='/product/{{this.item._id}}/detail' class='tbl-img img'>
-                <img src='../{{this.item.image}}' alt='{{this.item.name}}' />
-              </a>
-              <div class='tbl-info list-info'>
-                <a href='/product/{{this.item._id}}/detail' class='list-tt'>
-                  {{this.item.name}}
-                </a>
-              </div>
-            </div>
-            <div class='tbl-price list-info'>
-              <div class='price'>{{formatMoneyVnd this.item.price}}</div>
-            </div>
-            <div class='tbl-num'>
-              <div class='detai-buy'>
-                <a
-                  href='javascript:void(0);'
-                  class='icon minus'
-                  onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'-');"
-                ><i class='fas fa-minus'></i></a>
-                <span class='num'>{{this.quantity}}</span>
-                <a
-                  href='javascript:void(0);'
-                  class='icon plus'
-                  onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'+');"
-                ><i class='fas fa-plus'></i></a>
-              </div>
-            </div>
-            <div class='tbl-sum list-info'>
-              <p class='price'>{{formatMoneyVnd this.totalPrice}}</p>
-            </div>
-            <a class='close' href='/cart/delete/{{this.item._id}}'>
-              <i class='fa-solid fa-xmark'></i>
-            </a>
-          </li>
-        {{/each}}
-      {{/each}}
-    {{else}}
-      <li class='clear'>
-        <p class='tbl_empty'>Bạn chưa có đơn hàng nào!</p>
-      </li>
-    {{/if}}
-
-  </ul>
+  <div class='card'>
+    <h5 class='card-header'>Đơn hàng ({{countOrder}})</h5>
+    <div class='card-body'>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th scope='col'>Đơn hàng</th>
+            <th scope='col'>Ngày</th>
+            <th scope='col'>Thanh toán</th>
+            <th scope='col'>Giao hàng</th>
+            <th scope='col'>Tổng</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#if orders}}
+            {{#each orders}}
+              <tr>
+                <th scope='row'>{{#each this}}{{this.paymentId}}{{/each}}</th>
+                <td>{{#each this}}{{formatDate this.createdAt}}{{/each}}</td>
+                <td>{{#each this}}{{checkPaymentType this.paymentType}}{{/each}}</td>
+                <td>{{#each this}}{{checkOrderStatus this.orderStatus}}{{/each}}</td>
+                <td>{{#each this}}{{formatMoneyVnd this.cart.totalPrice}}{{/each}}</td>
+              </tr>
+            {{/each}}
+          {{else}}
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </div>
   {{!-- <div class='tool-price'>
     <p class='clearfix price-full'><span>Tổng tiền thanh toán: </span><span
         class='tool-price-num'

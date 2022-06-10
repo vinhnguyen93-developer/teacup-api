@@ -41,13 +41,10 @@ class OrderController {
           order.items = cart.generateArray();
         });
 
-        res.json({
+        res.render('orders/my-order', {
           orders: orders,
+          countOrder: orders.length,
         });
-
-        // res.render('orders/my-order', {
-        //   orders: orders,
-        // });
       })
       .catch(next);
   }

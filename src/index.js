@@ -57,9 +57,17 @@ app.engine(
   engine({
     extname: '.hbs',
     helpers: {
-      sum: (a, b) => a + b,
       formatDate: (date) => {
-        return date.toLocaleString();
+        if (date === undefined) {
+          return '';
+        } else {
+          let today = new Date(`${date}`);
+          const dd = String(today.getDate()).padStart(2, '0');
+          const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+          const yyyy = today.getFullYear();
+
+          return (today = mm + ' Tháng ' + dd + ', ' + yyyy);
+        }
       },
       formatMoneyVnd: (money) => {
         if (!money) {
@@ -78,8 +86,23 @@ app.engine(
         if (categoryId === productCategoryId) {
           return 'selected';
         }
-
-        console.log(false);
+      },
+      checkPaymentType: (paymentType) => {
+        if (paymentType === undefined) {
+          return '';
+        } else if (paymentType === '1') {
+          return 'Thanh toán khi nhận hàng';
+        } else if (paymentType === '9');
+        return 'Đã thanh toán online';
+      },
+      checkOrderStatus: (orderStatus) => {
+        if (orderStatus === undefined) {
+          return '';
+        } else if (orderStatus === true) {
+          return 'Đã thực hiện';
+        } else {
+          return 'Đang tiến hành';
+        }
       },
     },
   }),
