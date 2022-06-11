@@ -32,6 +32,26 @@ class CartController {
       });
   }
 
+  // [GET] cart/:id/sub
+  async subOneProduct(req, res, next) {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart);
+
+    cart.subOne(productId);
+    req.session.cart = cart;
+    res.redirect('/cart/show');
+  }
+
+  // [GET] cart/:id/plus
+  async plusOneProduct(req, res, next) {
+    const productId = req.params.id;
+    const cart = new Cart(req.session.cart);
+
+    cart.plusOne(productId);
+    req.session.cart = cart;
+    res.redirect('/cart/show');
+  }
+
   // [GET] cart/delete/:id
   destroy(req, res, next) {
     const productId = req.params.id;

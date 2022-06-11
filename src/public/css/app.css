@@ -769,7 +769,7 @@ a {
   color: #004280;
 }
 
-.tbl-num .detai-buy {
+.tbl-num .detail-buy {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -778,7 +778,7 @@ a {
   width: 100%;
 }
 
-.detai-buy input {
+.detail-buy input {
   width: 1.944444444444444em;
   height: 1.944444444444444em;
   background-color: #004280;

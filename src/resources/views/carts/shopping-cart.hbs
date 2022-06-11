@@ -30,18 +30,10 @@
             <div class='price'>{{formatMoneyVnd this.item.price}}</div>
           </div>
           <div class='tbl-num'>
-            <div class='detai-buy'>
-              <a
-                href='javascript:void(0);'
-                class='icon minus'
-                onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'-');"
-              ><i class='fas fa-minus'></i></a>
+            <div class='detail-buy'>
+              <a href='/cart/{{this.item._id}}/sub' class='icon minus'><i class='fas fa-minus'></i></a>
               <span class='num'>{{this.quantity}}</span>
-              <a
-                href='javascript:void(0);'
-                class='icon plus'
-                onclick="updateCart('6832a7b24bc06775d02b7406880b93fc',1,'+');"
-              ><i class='fas fa-plus'></i></a>
+              <a href='/cart/{{this.item._id}}/plus' class='icon plus'><i class='fas fa-plus'></i></a>
             </div>
           </div>
           <div class='tbl-sum list-info'>
